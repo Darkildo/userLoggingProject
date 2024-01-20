@@ -29,6 +29,7 @@ func main() {
 	fmt.Println("1) generate users")
 	fmt.Println("2) generate logs")
 	fmt.Println("3) print log from user")
+	fmt.Println("4) remove log from user")
 	var input string
 
 	for {
@@ -68,6 +69,27 @@ func main() {
 				userLogs, _ := logRepo.LoadAll(input)
 				fmt.Println("Log count is:" + strconv.Itoa(len(userLogs)))
 				for i, log := range userLogs {
+					fmt.Println("logIndex: " + strconv.Itoa(i) + " time :" + log.Time.String() + log.Message)
+				}
+			}
+		case "4":
+			{
+				fmt.Println("Get user id:")
+				_, err := fmt.Scan(&input)
+				if err != nil {
+					fmt.Println("Error:", err)
+					continue
+				}
+				err = logRepo.RemoveAll(input)
+				if err != nil {
+					continue
+				}
+				all, err := logRepo.LoadAll(input)
+				if err != nil {
+					return
+				}
+				fmt.Println("Log count is:" + strconv.Itoa(len(all)))
+				for i, log := range all {
 					fmt.Println("logIndex: " + strconv.Itoa(i) + " time :" + log.Time.String() + log.Message)
 				}
 			}
