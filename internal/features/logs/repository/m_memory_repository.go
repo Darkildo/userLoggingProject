@@ -18,12 +18,19 @@ func New() *MMemoryRepository {
 
 func (s *MMemoryRepository) SaveAll(userId string, entries []LogEntry.LogEntry) error {
 
-	st, _ := s.store.Load(userId)
+	var lEntries *mstore.Mstore[LogEntry.LogEntry]
+	var ok bool
+	lEntries, ok = s.store.Load(userId)
+	if !ok {
+		var slice []LogEntry.LogEntry
+		lEntries = mstore.NewStore[LogEntry.LogEntry](&slice)
+	}
 
-	_, err := st.Add(entries...)
+	_, err := lEntries.Add(entries...)
 	if err != nil {
 		return err
 	}
+	s.store.Store(userId, lEntries)
 	return nil
 }
 func (s *MMemoryRepository) Save(userId string, entry *LogEntry.LogEntry) (int, error) {

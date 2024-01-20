@@ -18,7 +18,10 @@ func main() {
 
 		for logId := 0; logId < 20; logId++ {
 			log := makeRandomLog()
-			logRepo.Save(strconv.Itoa(userId), log)
+			_, err := logRepo.Save(strconv.Itoa(userId), log)
+			if err != nil {
+				continue
+			}
 		}
 	}
 	fmt.Println("Select action:")
