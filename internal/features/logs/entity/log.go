@@ -1,8 +1,8 @@
-package main
+package LogEntry
 
 import "time"
 
-type Log struct {
+type LogEntry struct {
 	Time    time.Time
 	Message string
 }
