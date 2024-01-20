@@ -30,6 +30,7 @@ func main() {
 	fmt.Println("2) generate logs")
 	fmt.Println("3) print log from user")
 	fmt.Println("4) remove log from user")
+	fmt.Println("5) generate custom log count")
 	var input string
 
 	for {
@@ -93,6 +94,27 @@ func main() {
 					fmt.Println("logIndex: " + strconv.Itoa(i) + " time :" + log.Time.String() + log.Message)
 				}
 			}
+		case "5":
+			{
+				fmt.Println("Get user id:")
+				_, err := fmt.Scan(&input)
+				if err != nil {
+					fmt.Println("Error:", err)
+					continue
+				}
+				fmt.Println("Get log count:")
+				var count string
+				_, err = fmt.Scan(&count)
+				if err != nil {
+					fmt.Println("Error:", err)
+					continue
+				}
+				c, e := strconv.Atoi(count)
+				if e != nil {
+					continue
+				}
+				generateAndSaveLog(input, c, logRepo)
+			}
 		default:
 			break
 		}
@@ -116,13 +138,15 @@ func generateAndSaveLog(userId string, count int, repo repository.LogsRepository
 
 		go func() {
 			id, err := repo.Save(userId, makeRandomLog())
-			if err == nil {
+			if err == nil && count < 5000 {
+
 				fmt.Println("saved LogId is:" + strconv.Itoa(id))
 			}
 			wg.Done()
 		}()
 	}
 	wg.Wait()
+	fmt.Println("saved element count is:" + strconv.Itoa(count))
 }
 
 func makeRandomLog() *LogEntry.LogEntry {
