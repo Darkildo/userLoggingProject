@@ -11,7 +11,7 @@ type MMemoryRepository struct {
 	store *cmap.Map[string, *mstore.Mstore[LogEntry.LogEntry]]
 }
 
-func New() *MMemoryRepository {
+func NewMemoryRepo() *MMemoryRepository {
 
 	return &MMemoryRepository{store: &cmap.Map[string, *mstore.Mstore[LogEntry.LogEntry]]{}}
 }

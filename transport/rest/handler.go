@@ -23,7 +23,7 @@ func NewHandler(service *service_provider.ServiceProvider) *Handler {
 	}
 }
 
-func (h *Handler) Init(conf *config.ConfigSystem) *gin.Engine {
+func (h *Handler) Init(conf *config.LaunchConfig) *gin.Engine {
 	router := gin.Default()
 
 	router.Use(

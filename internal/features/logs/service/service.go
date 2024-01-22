@@ -9,7 +9,7 @@ type LogService struct {
 	repo repository.LogsRepository
 }
 
-func newService(repo repository.LogsRepository) *LogService {
+func NewService(repo repository.LogsRepository) *LogService {
 	return &LogService{repo: repo}
 }
 
