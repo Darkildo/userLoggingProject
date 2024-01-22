@@ -1,11 +1,13 @@
 package service_provider
 
-import "userLoggingProject/internal/features/logs/repository"
+import (
+	"userLoggingProject/internal/features/logs/service"
+)
 
 type ServiceProvider struct {
-	Logs *repository.LogsRepository
+	Logs *service.LogService
 }
 
-func NewServiceProvider(logsRepo *repository.LogsRepository) *ServiceProvider {
+func NewServiceProvider(logsRepo *service.LogService) *ServiceProvider {
 	return &ServiceProvider{Logs: logsRepo}
 }
