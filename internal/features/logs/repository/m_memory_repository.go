@@ -69,7 +69,7 @@ func (s *MMemoryRepository) Load(userId string, count int) ([]LogEntry.LogEntry,
 	if len(entries) <= count {
 		return entries, nil
 	}
-	return entries[:count], nil
+	return entries[:max(count, 1)], nil
 }
 func (s *MMemoryRepository) RemoveAll(userId string) error {
 	st, ok := s.store.Load(userId)

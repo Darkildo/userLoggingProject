@@ -1,6 +1,7 @@
 package service
 
 import (
+	"errors"
 	LogEntry "userLoggingProject/internal/features/logs/entity"
 	"userLoggingProject/internal/features/logs/repository"
 )
@@ -28,6 +29,13 @@ func (s *LogService) ClearLogs(userId string) error {
 func (s *LogService) GetAll(userId string) ([]LogEntry.LogEntry, error) {
 	return s.repo.LoadAll(userId)
 }
-func (s *LogService) GetById(userId string, logId int) ([]LogEntry.LogEntry, error) {
-	return s.repo.Load(userId, logId)
+func (s *LogService) GetById(userId string, logId int) (*LogEntry.LogEntry, error) {
+	res, err := s.repo.Load(userId, logId+1)
+	if err != nil {
+		return nil, err
+	}
+	if len(res) <= logId {
+		return nil, errors.New("not found LogId")
+	}
+	return &res[len(res)-1], nil
 }
