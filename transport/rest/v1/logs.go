@@ -2,6 +2,7 @@ package v1
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/cast"
 	"net/http"
 	"userLoggingProject/pkg/logger"
 	"userLoggingProject/transport/rest/v1/requests"
@@ -29,7 +30,7 @@ func (h *Handler) initLogRoutes(api *gin.RouterGroup) {
 // @Failure default {object} response
 // @Router /logs/{id} [get]
 func (h *Handler) getAll(c *gin.Context) {
-	logs, err := h.services.Logs.GetAll(c.GetString("id"))
+	logs, err := h.services.Logs.GetAll(cast.ToString(c.Param("id")))
 	if err != nil {
 		newResponse(c, http.StatusInternalServerError, err.Error())
 
