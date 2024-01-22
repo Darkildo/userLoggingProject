@@ -13,6 +13,13 @@ definitions:
       userId:
         type: string
     type: object
+  requests.GetByIdRequest:
+    properties:
+      logId:
+        type: integer
+      userId:
+        type: string
+    type: object
   v1.response:
     properties:
       message:
@@ -22,38 +29,6 @@ info:
   contact: {}
 paths:
   /logs/:
-    get:
-      consumes:
-      - application/json
-      description: get all user logs
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/LogEntry.LogEntry'
-            type: array
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/v1.response'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/v1.response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/v1.response'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/v1.response'
-      summary: Get all logs
-      tags:
-      - logs
     post:
       consumes:
       - application/json
@@ -126,17 +101,16 @@ paths:
       summary: Remove All User Logs
       tags:
       - logs
-  /logs/{id}{logId}:
     get:
       consumes:
       - application/json
-      description: get logs by userId
+      description: get all user logs
       parameters:
       - description: id
         in: path
         name: id
         required: true
-        type: integer
+        type: string
       produces:
       - application/json
       responses:
@@ -162,7 +136,45 @@ paths:
           description: ""
           schema:
             $ref: '#/definitions/v1.response'
-      summary: Get Logs By UserId
+      summary: Get all logs
+      tags:
+      - logs
+  /logs/getById:
+    post:
+      consumes:
+      - application/json
+      description: get log by id
+      parameters:
+      - description: id
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/requests.GetByIdRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/LogEntry.LogEntry'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/v1.response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/v1.response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/v1.response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/v1.response'
+      summary: Get Log By id
       tags:
       - logs
 swagger: "2.0"

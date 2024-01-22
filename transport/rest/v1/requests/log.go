@@ -6,3 +6,8 @@ type AddLogRequest struct {
 	UserId string
 	Log    LogEntry.LogEntry
 }
+
+type GetByIdRequest struct {
+	UserId string
+	LogId  int
+}

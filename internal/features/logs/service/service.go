@@ -22,12 +22,12 @@ func (s *LogService) RemoveLog(userId string, logId int) error {
 }
 
 func (s *LogService) ClearLogs(userId string) error {
-	return s.ClearLogs(userId)
+	return s.repo.RemoveAll(userId)
 }
 
 func (s *LogService) GetAll(userId string) ([]LogEntry.LogEntry, error) {
-	return s.GetAll(userId)
+	return s.repo.LoadAll(userId)
 }
 func (s *LogService) GetById(userId string, logId int) ([]LogEntry.LogEntry, error) {
-	return s.GetById(userId, logId)
+	return s.repo.Load(userId, logId)
 }
